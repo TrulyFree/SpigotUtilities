@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/message/message.iml" filepath="$PROJECT_DIR$/.idea/modules/message/message.iml" group="message" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/misc/misc.iml" filepath="$PROJECT_DIR$/.idea/modules/misc/misc.iml" group="misc" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scripting/scripting.iml" filepath="$PROJECT_DIR$/.idea/modules/scripting/scripting.iml" group="scripting" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spigot.utilities.iml" filepath="$PROJECT_DIR$/.idea/modules/spigot.utilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spigot.utilities.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/spigot.utilities.lib.iml" group="spigot.utilities.lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/spigot.utilities.lib_main.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/spigot.utilities.lib_main.iml" group="spigot.utilities.lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/spigot.utilities.lib_test.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/spigot.utilities.lib_test.iml" group="spigot.utilities.lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail.iml" filepath="$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail.iml" group="message/spigot.utilities.message.mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail_main.iml" filepath="$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail_main.iml" group="message/spigot.utilities.message.mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail_test.iml" filepath="$PROJECT_DIR$/.idea/modules/message/mail/spigot.utilities.message.mail_test.iml" group="message/spigot.utilities.message.mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping.iml" filepath="$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping.iml" group="misc/spigot.utilities.misc.ping" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping_main.iml" filepath="$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping_main.iml" group="misc/spigot.utilities.misc.ping" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping_test.iml" filepath="$PROJECT_DIR$/.idea/modules/misc/ping/spigot.utilities.misc.ping_test.iml" group="misc/spigot.utilities.misc.ping" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin.iml" group="spigot.utilities.plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin_main.iml" group="spigot.utilities.plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin/spigot.utilities.plugin_test.iml" group="spigot.utilities.plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/team/team.iml" filepath="$PROJECT_DIR$/.idea/modules/team/team.iml" group="team" />
+    </modules>
+  </component>
+</project>

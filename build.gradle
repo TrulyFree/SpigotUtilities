@@ -1,0 +1,90 @@
+group 'io.github.trulyfree'
+version '1.0-SNAPSHOT'
+
+def desiredUtilities = new File('desired_utilities.txt').readLines()
+desiredUtilities.add('spigot.utilities.plugin')
+desiredUtilities.add('spigot.utilities.lib')
+
+subprojects {
+    def subproject = it
+    plugins.withType(JavaPlugin) {
+        repositories {
+            mavenCentral()
+            maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+            maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/sonatype-nexus-snapshots/' }
+        }
+        task copyClasses(type: Copy, dependsOn: build) {
+            from new File(subproject.buildDir, 'classes').toPath()
+            into new File(rootProject.buildDir, 'classes').toPath()
+            include '**/*.class'
+        }
+        if (desiredUtilities.contains(subproject.name)) {
+            subproject.build.finalizedBy copyClasses
+        }
+    }
+}
+
+task clean(type: Task) {
+    subprojects {
+        plugins.withType(JavaPlugin) {
+            project.clean
+        }
+    }
+    doLast {
+        delete buildDir
+    }
+}
+
+task build(type: Task, dependsOn: clean) {}
+
+task processResources(type: Task) {
+
+    doLast {
+        def classDir = mkdir('build/classes')
+        def resourceDir = mkdir('build/resources/main')
+        classDir.mkdirs()
+        resourceDir.mkdirs()
+
+        def commandYml = new File('build/resources/main/commands.yml')
+        def permissionYml = new File('build/resources/main/permissions.yml')
+
+        if (commandYml.exists())
+            commandYml.delete()
+        commandYml.write 'commands:\n'
+
+        if (permissionYml.exists())
+            permissionYml.delete()
+        permissionYml.write 'permissions:\n'
+
+        def pluginYml = new File('build/resources/main/plugin.yml')
+        if (pluginYml.exists())
+            pluginYml.delete()
+
+        subprojects {
+            plugins.withType(JavaPlugin) {
+                def commandCommandYml = new File(project.buildDir, 'resources/main/commands.yml')
+                def commandPermissionsYml = new File(project.buildDir, 'resources/main/permissions.yml')
+                if (commandCommandYml.exists() && commandPermissionsYml.exists()) {
+                    commandYml.text = commandYml.text + commandCommandYml.text + '\n'
+                    permissionYml.text = permissionYml.text + commandPermissionsYml.text + '\n'
+                }
+            }
+        }
+        pluginYml.write new File('plugin/build/resources/main/plugin.yml').text
+        pluginYml.text = pluginYml.text + commandYml.text
+        pluginYml.text = pluginYml.text + permissionYml.text
+        delete commandYml
+        delete permissionYml
+    }
+}
+
+task buildFinalJar(type: org.gradle.jvm.tasks.Jar, dependsOn: processResources) {
+    baseName 'TrulyFree-Utilities'
+    destinationDir new File(buildDir, 'lib')
+    from new File(buildDir, 'classes/java/main')
+    from new File(buildDir, 'resources/main')
+    manifest {
+        attributes 'Implementation-Title': 'TrulyFree Utilities Plugin',
+                'Implementation-Version': project.version
+    }
+}

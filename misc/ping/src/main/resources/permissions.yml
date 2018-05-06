@@ -1,0 +1,4 @@
+  ping.self:
+    default: true
+  ping.others:
+    default: op

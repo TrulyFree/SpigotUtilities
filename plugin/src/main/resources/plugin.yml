@@ -1,0 +1,3 @@
+name: TrulyFree Utilities
+main: io.github.trulyfree.spigot.utilities.plugin.UtilitiesPlugin
+version: 1.0
