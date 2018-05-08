@@ -24,10 +24,13 @@ public class UtilitiesPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        utilities.forEach(testableCommandExecutor -> this.getServer().getPluginManager().registerEvents(
-                testableCommandExecutor,
-                this
-        ));
+        utilities.forEach(testableCommandExecutor -> {
+            testableCommandExecutor.useStandardFactories();
+            this.getServer().getPluginManager().registerEvents(
+                    testableCommandExecutor,
+                    this
+            );
+        });
     }
 
     @Override
