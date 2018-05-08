@@ -2,7 +2,6 @@ package io.github.trulyfree.spigot.utilities.plugin;
 
 import io.github.trulyfree.spigot.utilities.lib.Utility;
 import lombok.SneakyThrows;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class UtilitiesPlugin extends JavaPlugin {
                     '.'
             );
             Class<?> clazz = getClassLoader().loadClass(className);
-            if (Utility.class.isAssignableFrom(clazz)) {
+            if (Utility.class.isAssignableFrom(clazz) && !clazz.isAssignableFrom(Utility.class)) {
                 try {
                     utilities.add((Utility) clazz.newInstance());
                 } catch (InstantiationException | IllegalAccessException e1) {
