@@ -14,7 +14,7 @@ public class PingCommandExecutionFactory implements Factory<Boolean, CommandExec
             case 1:
                 return pingOther(arguments);
             default:
-                return pingUsage(arguments);
+                return false;
         }
     }
 
@@ -48,14 +48,6 @@ public class PingCommandExecutionFactory implements Factory<Boolean, CommandExec
                 arguments.getSender().sendMessage("Looks like something went wrong while pinging! Try again.");
             }
         }
-        return true;
-    }
-
-    private boolean pingUsage(final CommandExecutionArguments arguments) {
-        arguments.getSender().sendMessage(String.format(
-                "Usage: /%s [target]",
-                arguments.getLabel()
-        ));
         return true;
     }
 

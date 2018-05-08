@@ -1,6 +1,7 @@
 package io.github.trulyfree.spigot.utilities.lib.command.standard;
 
 import io.github.trulyfree.spigot.utilities.lib.command.CommandExecutionArguments;
+import io.github.trulyfree.spigot.utilities.lib.util.NullabilityUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -37,7 +38,7 @@ public final class StandardCommandExecutionArguments implements CommandExecution
 
     @Override
     public CommandExecutionArguments setArgs(@NonNull @NotNull final String[] args) {
-        this.args = Objects.requireNonNull(args);
+        this.args = NullabilityUtil.requireNoNulls(args);
         return this;
     }
 }

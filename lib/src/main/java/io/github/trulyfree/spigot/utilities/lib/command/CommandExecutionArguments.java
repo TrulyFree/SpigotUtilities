@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("NullableProblems")
 public interface CommandExecutionArguments {
     @NonNull
     @NotNull
@@ -36,11 +37,11 @@ public interface CommandExecutionArguments {
     CommandExecutionArguments setArgs(@NonNull @NotNull String[] args);
 
     @Contract("!null, !null, !null, !null, !null -> _")
-    static CommandExecutionArguments fill(@NonNull @NotNull CommandExecutionArguments commandExecutionArguments,
-                                          @NonNull @NotNull CommandSender sender,
-                                          @NonNull @NotNull Command command,
-                                          @NonNull @NotNull String label,
-                                          @NonNull @NotNull String[] args) {
+    static CommandExecutionArguments fill(CommandExecutionArguments commandExecutionArguments,
+                                          CommandSender sender,
+                                          Command command,
+                                          String label,
+                                          String[] args) {
         return commandExecutionArguments.setSender(sender).setCommand(command).setLabel(label).setArgs(args);
     }
 }

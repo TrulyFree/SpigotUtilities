@@ -17,8 +17,6 @@ public abstract class StandardCommandExecutor implements TestableCommandExecutor
     private final AtomicReference<Factory<Boolean, CommandExecutionArguments>> commandFactory = new AtomicReference<>();
     private final AtomicReference<Provider<CommandExecutionArguments>> argumentsProvider = new AtomicReference<>();
 
-
-
     public boolean onCommand(final CommandSender sender,
                              final Command command,
                              final String label,
