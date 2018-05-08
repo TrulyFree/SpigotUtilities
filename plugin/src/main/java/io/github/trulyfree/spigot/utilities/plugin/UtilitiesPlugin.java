@@ -22,6 +22,7 @@ public class UtilitiesPlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         super.onLoad();
+        loadClasses();
     }
 
     @SneakyThrows
