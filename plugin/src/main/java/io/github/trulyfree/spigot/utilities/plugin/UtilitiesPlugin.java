@@ -1,37 +1,23 @@
 package io.github.trulyfree.spigot.utilities.plugin;
 
-import io.github.trulyfree.spigot.utilities.lib.command.TestableCommandExecutor;
-import junit.framework.TestCase;
+import io.github.trulyfree.spigot.utilities.lib.Utility;
 import lombok.SneakyThrows;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class UtilitiesPlugin extends JavaPlugin {
-    private static final ArrayList<TestableCommandExecutor> utilities = new ArrayList<>();
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        loadClasses();
-    }
+    private static final ArrayList<Utility> utilities = new ArrayList<>();
 
     @SneakyThrows
     private void loadClasses() {
         String pathToJar = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
         JarFile jarFile = new JarFile(pathToJar);
         Enumeration<JarEntry> e = jarFile.entries();
-        URL[] urls = {new URL("jar:file:" + pathToJar + "!/")};
-        URLClassLoader cl = URLClassLoader.newInstance(urls);
         while (e.hasMoreElements()) {
             JarEntry je = e.nextElement();
             if (je.isDirectory() || !je.getName().endsWith(".class")) {
@@ -45,12 +31,15 @@ public class UtilitiesPlugin extends JavaPlugin {
                     '/',
                     '.'
             );
-            Class<?> clazz = cl.loadClass(className);
-            if (TestableCommandExecutor.class.isAssignableFrom(clazz)) {
+            Class<?> clazz = getClassLoader().loadClass(className);
+            if (Utility.class.isAssignableFrom(clazz)) {
                 try {
-                    utilities.add((TestableCommandExecutor) clazz.newInstance());
+                    utilities.add((Utility) clazz.newInstance());
                 } catch (InstantiationException | IllegalAccessException e1) {
-                    getLogger().warning("Couldn't instantiate utility " + clazz.getSimpleName());
+                    getLogger().warning(String.format(
+                            "Couldn't instantiate utility %s.",
+                            clazz.getSimpleName()
+                    ));
                     e1.printStackTrace();
                 }
             }
@@ -60,15 +49,12 @@ public class UtilitiesPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        utilities.forEach(testableCommandExecutor -> {
-            testableCommandExecutor.useStandardFactories();
-            this.getServer().getPluginManager().registerEvents(
-                    testableCommandExecutor,
-                    this
-            );
+        loadClasses();
+        utilities.forEach(utility -> {
+            utility.onEnable(this);
             getLogger().info(String.format(
-                    "Registered utility of type %s",
-                    testableCommandExecutor.getClass().getSimpleName()
+                    "Enabled utility %s.",
+                    utility.getName()
             ));
         });
         getLogger().info("Successfully enabled.");
@@ -77,7 +63,13 @@ public class UtilitiesPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-        HandlerList.unregisterAll(this);
+        utilities.forEach(utility -> {
+            utility.onDisable(this);
+            getLogger().info(String.format(
+                    "Disabled utility %s.",
+                    utility.getName()
+            ));
+        });
         getLogger().info("Successfully disabled.");
     }
 }
