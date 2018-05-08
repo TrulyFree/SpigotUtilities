@@ -45,7 +45,7 @@ public class UtilitiesPlugin extends JavaPlugin {
                     '.'
             );
             Class<?> clazz = cl.loadClass(className);
-            if (clazz.isAssignableFrom(TestableCommandExecutor.class)) {
+            if (TestableCommandExecutor.class.isAssignableFrom(clazz)) {
                 try {
                     utilities.add((TestableCommandExecutor) clazz.newInstance());
                 } catch (InstantiationException | IllegalAccessException e1) {
