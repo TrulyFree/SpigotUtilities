@@ -30,12 +30,18 @@ public class UtilitiesPlugin extends JavaPlugin {
                     testableCommandExecutor,
                     this
             );
+            getLogger().info(String.format(
+                    "Registered utility of type %s",
+                    testableCommandExecutor.getClass().getSimpleName()
+            ));
         });
+        getLogger().info("Successfully enabled.");
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
         HandlerList.unregisterAll(this);
+        getLogger().info("Successfully disabled.");
     }
 }
