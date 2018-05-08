@@ -8,17 +8,28 @@ import org.bukkit.entity.Player;
 public class PingCommandExecutionFactory implements Factory<Boolean, CommandExecutionArguments> {
     @Override
     public Boolean create(final CommandExecutionArguments arguments) {
-        switch (arguments.getArgs().length) {
-            case 0:
-                return pingSelf(arguments);
-            case 1:
-                return pingOther(arguments);
-            default:
-                return false;
+        if (arguments.getCommand().getName().equals("ping")) {
+            switch (arguments.getArgs().length) {
+                case 0:
+                    pingSelf(arguments);
+                    break;
+                case 1:
+                    pingOther(arguments);
+                    break;
+                default:
+                    arguments.getSender().sendMessage(String.format(
+                            "Usage: /%s [target]",
+                            arguments.getLabel()
+                    ));
+                    return false;
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private boolean pingSelf(final CommandExecutionArguments arguments) {
+    private void pingSelf(final CommandExecutionArguments arguments) {
         int ourPing = getPing(arguments.getSender());
         if (ourPing != -1) {
             arguments.getSender().sendMessage(String.format(
@@ -28,10 +39,9 @@ public class PingCommandExecutionFactory implements Factory<Boolean, CommandExec
         } else {
             arguments.getSender().sendMessage("Looks like something went wrong while pinging! Try again.");
         }
-        return true;
     }
 
-    private boolean pingOther(final CommandExecutionArguments arguments) {
+    private void pingOther(final CommandExecutionArguments arguments) {
         Player other = arguments.getSender().getServer().getPlayer(arguments.getArgs()[0]);
         if (other == null) {
             arguments.getSender().sendMessage("Uh oh. Looks like there's no player by that name online.");
@@ -48,7 +58,6 @@ public class PingCommandExecutionFactory implements Factory<Boolean, CommandExec
                 arguments.getSender().sendMessage("Looks like something went wrong while pinging! Try again.");
             }
         }
-        return true;
     }
 
     private int getPing(final CommandSender player) {

@@ -6,9 +6,17 @@ import io.github.trulyfree.spigot.utilities.lib.command.standard.StandardCommand
 import lombok.NonNull;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 public class PingCommand extends StandardCommandExecutor implements Utility {
+    @Override
+    public void onEnable(@NonNull final JavaPlugin plugin) {
+        useStandardFactories();
+        plugin.getServer().getPluginManager().registerEvents(
+                this,
+                plugin
+        );
+    }
+
     @Override
     public void useStandardFactories() {
         this.setCommandHandlers(
@@ -18,16 +26,7 @@ public class PingCommand extends StandardCommandExecutor implements Utility {
     }
 
     @Override
-    public void onEnable(@NonNull @NotNull final JavaPlugin plugin) {
-        useStandardFactories();
-        plugin.getServer().getPluginManager().registerEvents(
-                this,
-                plugin
-        );
-    }
-
-    @Override
-    public void onDisable(@NonNull @NotNull final JavaPlugin plugin) {
+    public void onDisable() {
         HandlerList.unregisterAll(this);
     }
 

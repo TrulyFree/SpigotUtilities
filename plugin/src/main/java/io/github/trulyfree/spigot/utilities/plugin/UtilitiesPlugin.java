@@ -12,6 +12,33 @@ import java.util.jar.JarFile;
 public class UtilitiesPlugin extends JavaPlugin {
     private static final ArrayList<Utility> utilities = new ArrayList<>();
 
+    @Override
+    public void onDisable() {
+        super.onDisable();
+        utilities.forEach(utility -> {
+            utility.onDisable();
+            getLogger().info(String.format(
+                    "Disabled utility %s.",
+                    utility.getName()
+            ));
+        });
+        getLogger().info("Successfully disabled.");
+    }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        loadClasses();
+        utilities.forEach(utility -> {
+            utility.onEnable(this);
+            getLogger().info(String.format(
+                    "Enabled utility %s.",
+                    utility.getName()
+            ));
+        });
+        getLogger().info("Successfully enabled.");
+    }
+
     @SneakyThrows
     private void loadClasses() {
         String pathToJar = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
@@ -43,32 +70,5 @@ public class UtilitiesPlugin extends JavaPlugin {
                 }
             }
         }
-    }
-
-    @Override
-    public void onEnable() {
-        super.onEnable();
-        loadClasses();
-        utilities.forEach(utility -> {
-            utility.onEnable(this);
-            getLogger().info(String.format(
-                    "Enabled utility %s.",
-                    utility.getName()
-            ));
-        });
-        getLogger().info("Successfully enabled.");
-    }
-
-    @Override
-    public void onDisable() {
-        super.onDisable();
-        utilities.forEach(utility -> {
-            utility.onDisable(this);
-            getLogger().info(String.format(
-                    "Disabled utility %s.",
-                    utility.getName()
-            ));
-        });
-        getLogger().info("Successfully disabled.");
     }
 }

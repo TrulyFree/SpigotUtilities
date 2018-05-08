@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -19,25 +18,25 @@ public final class StandardCommandExecutionArguments implements CommandExecution
     @Getter @NonNull String[] args;
 
     @Override
-    public CommandExecutionArguments setSender(@NonNull @NotNull final CommandSender sender) {
+    public CommandExecutionArguments setSender(@NonNull final CommandSender sender) {
         this.sender = Objects.requireNonNull(sender);
         return this;
     }
 
     @Override
-    public CommandExecutionArguments setCommand(@NonNull @NotNull final Command command) {
+    public CommandExecutionArguments setCommand(@NonNull final Command command) {
         this.command = Objects.requireNonNull(command);
         return this;
     }
 
     @Override
-    public CommandExecutionArguments setLabel(@NonNull @NotNull final String label) {
+    public CommandExecutionArguments setLabel(@NonNull final String label) {
         this.label = Objects.requireNonNull(label);
         return this;
     }
 
     @Override
-    public CommandExecutionArguments setArgs(@NonNull @NotNull final String[] args) {
+    public CommandExecutionArguments setArgs(@NonNull final String[] args) {
         this.args = NullabilityUtil.requireNoNulls(args);
         return this;
     }

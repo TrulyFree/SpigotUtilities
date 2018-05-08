@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class StandardCommandExecutionArgumentsTest {
     private static StandardCommandExecutionArguments arguments;
@@ -19,35 +19,35 @@ public class StandardCommandExecutionArgumentsTest {
         arguments = null;
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setSender() {
         //noinspection ConstantConditions
         arguments.setSender(null);
         fail();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setCommand() {
         //noinspection ConstantConditions
         arguments.setCommand(null);
         fail();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setLabel() {
         //noinspection ConstantConditions
         arguments.setLabel(null);
         fail();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setArgsNull() {
         //noinspection ConstantConditions
         arguments.setArgs(null);
         fail();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void setArgsWithNulls() {
         arguments.setArgs(new String[]{null});
         fail();

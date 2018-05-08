@@ -7,7 +7,6 @@ import io.github.trulyfree.spigot.utilities.lib.prov.Provider;
 import lombok.NonNull;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,8 +30,8 @@ public abstract class StandardCommandExecutor implements TestableCommandExecutor
     }
 
     @Override
-    public void setCommandHandlers(@NonNull @NotNull final Factory<Boolean, CommandExecutionArguments> commandFactory,
-                                   @NonNull @NotNull final Provider<CommandExecutionArguments> argumentsProvider) {
+    public void setCommandHandlers(@NonNull final Factory<Boolean, CommandExecutionArguments> commandFactory,
+                                   @NonNull final Provider<CommandExecutionArguments> argumentsProvider) {
         this.commandFactory.set(commandFactory);
         this.argumentsProvider.set(argumentsProvider);
     }

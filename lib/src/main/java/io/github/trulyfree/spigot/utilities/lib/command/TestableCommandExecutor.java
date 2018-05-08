@@ -6,12 +6,11 @@ import lombok.NonNull;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 public interface TestableCommandExecutor extends CommandExecutor, Listener {
     @Contract("!null, !null -> _")
-    void setCommandHandlers(@NonNull @NotNull Factory<Boolean, CommandExecutionArguments> commandFactory,
-                            @NonNull @NotNull Provider<CommandExecutionArguments> argumentsProvider);
+    void setCommandHandlers(@NonNull Factory<Boolean, CommandExecutionArguments> commandFactory,
+                            @NonNull Provider<CommandExecutionArguments> argumentsProvider);
 
     void useStandardFactories();
 }

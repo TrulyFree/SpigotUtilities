@@ -7,14 +7,9 @@ import java.util.Objects;
 
 @UtilityClass
 public class NullabilityUtil {
-    public static <T> T[] requireNoNulls(@Nullable T[] array) throws
-                                                              IllegalArgumentException {
-        try {
-            for (T value : Objects.requireNonNull(array)) {
-                Objects.requireNonNull(value);
-            }
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException(e);
+    public static <T> T[] requireNoNulls(@Nullable T[] array) {
+        for (T value : Objects.requireNonNull(array)) {
+            Objects.requireNonNull(value);
         }
         return array;
     }
