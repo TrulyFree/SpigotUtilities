@@ -79,7 +79,7 @@ task processResources(type: Task) {
 }
 
 task buildFinalJar(type: org.gradle.jvm.tasks.Jar, dependsOn: processResources) {
-    baseName 'TrulyFree-Utilities'
+    baseName 'TrulyFreeUtilities'
     destinationDir new File(buildDir, 'lib')
     from new File(buildDir, 'classes/java/main')
     from new File(buildDir, 'resources/main')
