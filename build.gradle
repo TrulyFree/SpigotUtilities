@@ -4,34 +4,27 @@ import java.util.function.Predicate
 group 'io.github.trulyfree'
 version '1.0-SNAPSHOT'
 
-def desiredUtilitiesFile = new File(rootProject.buildDir, 'tmp/desired_utilities.txt')
 def desiredUtilities = new ArrayList<String>(Arrays.asList('plugin', 'lib'))
-if (desiredUtilitiesFile.exists()) {
-    desiredUtilities.addAll(Arrays.asList(new String(desiredUtilitiesFile.readBytes()).split(',')))
-} else {
-    def inputLine = "${project.hasProperty('selectUtilities') ? project.property('selectUtilities') : ''}"
-    if (!inputLine.matches('[a-zA-Z0-9:]+(,[a-zA-Z0-9:]+)*')) {
-        inputLine = new String()
-    }
-    desiredUtilitiesFile.parentFile.mkdirs()
-    desiredUtilitiesFile.write inputLine.toString()
-    Arrays.asList(inputLine.split(',')).stream().filter(new Predicate<String>() {
-        @Override
-        boolean test(final String s) {
-            return rootProject.allprojects.stream().anyMatch(new Predicate<Project>() {
-                @Override
-                boolean test(final Project project) {
-                    return project.name == s
-                }
-            })
-        }
-    }).forEach(new Consumer<String>() {
-        @Override
-        void accept(final String s) {
-            desiredUtilities.add(s)
-        }
-    })
+def inputLine = "${project.hasProperty('selectUtilities') ? project.property('selectUtilities') : ''}"
+if (!inputLine.matches('[a-zA-Z0-9:]+(,[a-zA-Z0-9:]+)*')) {
+    inputLine = new String()
 }
+Arrays.asList(inputLine.split(',')).stream().filter(new Predicate<String>() {
+    @Override
+    boolean test(final String s) {
+        return rootProject.allprojects.stream().anyMatch(new Predicate<Project>() {
+            @Override
+            boolean test(final Project project) {
+                return project.name == s
+            }
+        })
+    }
+}).forEach(new Consumer<String>() {
+    @Override
+    void accept(final String s) {
+        desiredUtilities.add(s)
+    }
+})
 
 println 'Selected: '
 for (String utility : desiredUtilities) {
