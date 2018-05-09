@@ -1,13 +1,7 @@
 rootProject.name = 'spigot.utilities'
-include 'scripting'
-include 'team'
 include 'message'
 include 'message:mail'
-findProject(':message:mail')?.name = 'spigot.utilities.message.mail'
 include 'misc:ping'
-findProject(':misc:ping')?.name = 'spigot.utilities.misc.ping'
 include 'plugin'
-findProject(':plugin')?.name = 'spigot.utilities.plugin'
 include 'lib'
-findProject(':lib')?.name = 'spigot.utilities.lib'
 

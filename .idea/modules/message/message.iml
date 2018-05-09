@@ -5,7 +5,6 @@
     <content url="file://$MODULE_DIR$/../../../message">
       <excludeFolder url="file://$MODULE_DIR$/../../../message/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../message/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../message/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

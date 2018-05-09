@@ -1,12 +1,44 @@
+import java.util.function.Consumer
+import java.util.function.Predicate
+
 group 'io.github.trulyfree'
 version '1.0-SNAPSHOT'
 
-def desiredUtilities = new File('desired_utilities.txt').readLines()
-desiredUtilities.add('spigot.utilities.plugin')
-desiredUtilities.add('spigot.utilities.lib')
+def desiredUtilitiesFile = new File(rootProject.buildDir, 'tmp/desired_utilities.txt')
+def desiredUtilities = new ArrayList<String>(Arrays.asList('plugin', 'lib'))
+if (desiredUtilitiesFile.exists()) {
+    desiredUtilities.addAll(Arrays.asList(new String(desiredUtilitiesFile.readBytes()).split(',')))
+} else {
+    def inputLine = "${project.hasProperty('desiredSpigotUtilities') ? project.property('desiredSpigotUtilities') : ''}"
+    if (!inputLine.matches('[a-zA-Z0-9:]+(,[a-zA-Z0-9:]+)*')) {
+        inputLine = new String()
+    }
+    desiredUtilitiesFile.parentFile.mkdirs()
+    desiredUtilitiesFile.write inputLine.toString()
+    Arrays.asList(inputLine.split(',')).stream().filter(new Predicate<String>() {
+        @Override
+        boolean test(final String s) {
+            return rootProject.allprojects.stream().anyMatch(new Predicate<Project>() {
+                @Override
+                boolean test(final Project project) {
+                    return project.name == s
+                }
+            })
+        }
+    }).forEach(new Consumer<String>() {
+        @Override
+        void accept(final String s) {
+            desiredUtilities.add(s)
+        }
+    })
+}
+
+println 'Selected: '
+for (String utility : desiredUtilities) {
+    println utility
+}
 
 subprojects {
-    def subproject = it
     plugins.withType(JavaPlugin) {
         repositories {
             mavenCentral()
@@ -14,31 +46,47 @@ subprojects {
             maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/sonatype-nexus-snapshots/' }
         }
         task copyClasses(type: Copy, dependsOn: build) {
-            from new File(subproject.buildDir, 'classes').toPath()
+            from new File(project.buildDir, 'classes').toPath()
             into new File(rootProject.buildDir, 'classes').toPath()
             include '**/*.class'
         }
-        if (desiredUtilities.contains(subproject.name)) {
-            subproject.build.finalizedBy copyClasses
+        if (desiredUtilities.contains(project.name)) {
+            project.build.finalizedBy copyClasses
         }
     }
 }
 
-task clean(type: Task) {
+task displaySelectable(type: Task) {
+    def selectable = new ArrayList<String>()
+    subprojects {
+        plugins.withType(JavaPlugin) {
+            if (!desiredUtilities.contains(project.name)) {
+                selectable.add project.name
+            }
+        }
+    }
+    doLast {
+        println "Unselected projects: "
+        selectable.each {
+            println it
+        }
+    }
+}
+
+task clean(type: Delete) {
     subprojects {
         plugins.withType(JavaPlugin) {
             project.clean
         }
     }
-    doLast {
-        delete buildDir
-    }
+    delete buildDir
 }
+
+clean.finalizedBy displaySelectable
 
 task build(type: Task, dependsOn: clean) {}
 
 task processResources(type: Task) {
-
     doLast {
         def classDir = mkdir('build/classes')
         def resourceDir = mkdir('build/resources/main')
@@ -61,12 +109,14 @@ task processResources(type: Task) {
             pluginYml.delete()
 
         subprojects {
-            plugins.withType(JavaPlugin) {
-                def commandCommandYml = new File(project.buildDir, 'resources/main/commands.yml')
-                def commandPermissionsYml = new File(project.buildDir, 'resources/main/permissions.yml')
-                if (commandCommandYml.exists() && commandPermissionsYml.exists()) {
-                    commandYml.text = commandYml.text + commandCommandYml.text + '\n'
-                    permissionYml.text = permissionYml.text + commandPermissionsYml.text + '\n'
+            if (desiredUtilities.contains(it.name)) {
+                plugins.withType(JavaPlugin) {
+                    def commandCommandYml = new File(project.buildDir, 'resources/main/commands.yml')
+                    def commandPermissionsYml = new File(project.buildDir, 'resources/main/permissions.yml')
+                    if (commandCommandYml.exists() && commandPermissionsYml.exists()) {
+                        commandYml.text = commandYml.text + commandCommandYml.text + '\n'
+                        permissionYml.text = permissionYml.text + commandPermissionsYml.text + '\n'
+                    }
                 }
             }
         }

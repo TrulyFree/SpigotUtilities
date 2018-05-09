@@ -8,6 +8,6 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 dependencies {
-    compile project(':spigot.utilities.lib')
+    compile project(':lib')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

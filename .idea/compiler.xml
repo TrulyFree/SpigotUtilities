@@ -5,24 +5,14 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="message_main" target="1.8" />
-      <module name="message_test" target="1.8" />
-      <module name="misc_main" target="1.8" />
-      <module name="misc_test" target="1.8" />
-      <module name="scripting_main" target="1.8" />
-      <module name="scripting_test" target="1.8" />
-      <module name="spigot.utilities-team_main" target="1.8" />
-      <module name="spigot.utilities-team_test" target="1.8" />
-      <module name="spigot.utilities.lib_main" target="1.8" />
-      <module name="spigot.utilities.lib_test" target="1.8" />
-      <module name="spigot.utilities.message.mail_main" target="1.8" />
-      <module name="spigot.utilities.message.mail_test" target="1.8" />
-      <module name="spigot.utilities.misc.ping_main" target="1.8" />
-      <module name="spigot.utilities.misc.ping_test" target="1.8" />
-      <module name="spigot.utilities.plugin_main" target="1.8" />
-      <module name="spigot.utilities.plugin_test" target="1.8" />
-      <module name="team_main" target="1.8" />
-      <module name="team_test" target="1.8" />
+      <module name="lib_main" target="1.8" />
+      <module name="lib_test" target="1.8" />
+      <module name="mail_main" target="1.8" />
+      <module name="mail_test" target="1.8" />
+      <module name="ping_main" target="1.8" />
+      <module name="ping_test" target="1.8" />
+      <module name="plugin_main" target="1.8" />
+      <module name="plugin_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
