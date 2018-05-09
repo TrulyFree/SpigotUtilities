@@ -45,6 +45,8 @@ public class PingCommandExecutionFactory implements Factory<Boolean, CommandExec
         Player other = arguments.getSender().getServer().getPlayer(arguments.getArgs()[0]);
         if (other == null) {
             arguments.getSender().sendMessage("Uh oh. Looks like there's no player by that name online.");
+        } else if (other.equals(arguments.getSender())) {
+            pingSelf(arguments);
         } else {
             int otherPing = getPing(other), ourPing = getPing(arguments.getSender());
             if (otherPing != -1 && ourPing != -1) {
