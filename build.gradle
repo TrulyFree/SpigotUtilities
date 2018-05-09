@@ -79,6 +79,7 @@ task clean(type: Delete) {
             project.clean
         }
     }
+    //noinspection GroovyAssignabilityCheck
     delete buildDir
 }
 

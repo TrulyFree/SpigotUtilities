@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'io.github.trulyfree'
-version '1.0-SNAPSHOT'
+version rootProject.version
 
 sourceCompatibility = 1.8
 
