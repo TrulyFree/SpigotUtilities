@@ -1,6 +1,3 @@
-import java.util.function.Consumer
-import java.util.function.Predicate
-
 group 'io.github.trulyfree'
 version '1.0-SNAPSHOT'
 
@@ -9,22 +6,14 @@ def inputLine = "${project.hasProperty('selectUtilities') ? project.property('se
 if (!inputLine.matches('[a-zA-Z0-9:]+(,[a-zA-Z0-9:]+)*')) {
     inputLine = new String()
 }
-Arrays.asList(inputLine.split(',')).stream().filter(new Predicate<String>() {
-    @Override
-    boolean test(final String s) {
-        return rootProject.allprojects.stream().anyMatch(new Predicate<Project>() {
-            @Override
-            boolean test(final Project project) {
-                return project.name == s
-            }
-        })
+for (String entry : inputLine.split(',')) {
+    for (Project project : rootProject.allprojects) {
+        if (project.name == entry) {
+            desiredUtilities.add(entry)
+            break
+        }
     }
-}).forEach(new Consumer<String>() {
-    @Override
-    void accept(final String s) {
-        desiredUtilities.add(s)
-    }
-})
+}
 
 println 'Selected: '
 for (String utility : desiredUtilities) {
