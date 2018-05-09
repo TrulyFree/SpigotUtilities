@@ -9,7 +9,7 @@ def desiredUtilities = new ArrayList<String>(Arrays.asList('plugin', 'lib'))
 if (desiredUtilitiesFile.exists()) {
     desiredUtilities.addAll(Arrays.asList(new String(desiredUtilitiesFile.readBytes()).split(',')))
 } else {
-    def inputLine = "${project.hasProperty('selectUtilities') ? project.property('desiredSpigotUtilities') : ''}"
+    def inputLine = "${project.hasProperty('selectUtilities') ? project.property('selectUtilities') : ''}"
     if (!inputLine.matches('[a-zA-Z0-9:]+(,[a-zA-Z0-9:]+)*')) {
         inputLine = new String()
     }
